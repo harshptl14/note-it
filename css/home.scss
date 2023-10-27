@@ -1,0 +1,47 @@
+.card {
+  padding: 0.8em;
+  border: rgba(132, 149, 185, 0.5) 2px solid;
+  height: fit-content;
+
+  .title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+  }
+
+  .content {
+    font-size: 1rem;
+    margin-bottom: 0.5em;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    line-height: 0em;
+    font-weight: bold;
+  }
+}
+
+#addnotes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  max-width: 70%;
+}
+.notesLayout {
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  gap: 3em;
+  flex-wrap: wrap;
+
+  div {
+    flex-grow: 1;
+  }
+}
+
+.todocard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}

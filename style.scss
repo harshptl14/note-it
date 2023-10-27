@@ -1,0 +1,82 @@
+* {
+  color: rgba(20, 48, 63, 0.8);
+  box-sizing: border-box;
+}
+:root {
+  line-height: 1.5;
+  font-weight: 400;
+  box-sizing: border-box;
+  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+  font-family: "Poppins", -apple-system, system-ui, sans-serif;
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: inherit;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: rgb(235, 236, 240);
+  background-image: url(assets/background/noise.png);
+  background-size: 300px;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+.layout {
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
+}
+
+.mainContent {
+  box-sizing: border-box;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 1.8em;
+}
+
+button {
+  border-radius: 8px;
+  width: max-content;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: rgba(20, 48, 63, 0.8);
+  color: rgb(235, 236, 240);
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+// @media (prefers-color-scheme: light) {
+//   :root {
+//     color: #213547;
+//     background-color: #ffffff;
+//   }
+//   a:hover {
+//     color: #747bff;
+//   }
+//   button {
+//     background-color: #f9f9f9;
+//   }
+// }

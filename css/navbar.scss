@@ -1,0 +1,30 @@
+.body {
+  box-sizing: border-box;
+  height: 100vh;
+  background-color: rgb(223, 224, 229);
+  background-image: url(../assets/background/noise.png);
+  background-size: 300px;
+  font-weight: 600;
+  padding: 3em;
+  border-right: rgba(132, 149, 185, 0.5) 2px solid;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  gap: 0.6em;
+  font-size: 1.3rem;
+  align-items: center;
+  justify-content: center;
+  will-change: filter;
+  transition: filter 300ms;
+  :hover {
+    filter: drop-shadow(0 0 2em #190854);
+  }
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
