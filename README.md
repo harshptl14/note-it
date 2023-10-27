@@ -5,7 +5,7 @@ As part, of course, 23FA CPS593-05 WEB AND DATABASE PROGRAMMING 1132, I'm creati
 ![Note-it ERD](https://github.com/harshptl14/note-it/assets/57007680/0114accb-88fd-44c5-b5cb-554a577823c0)
 
 # Relational Diagram for Note-it
-![Note-it Relation diagram](https://github.com/harshptl14/note-it/assets/57007680/cb463bcd-791e-4ce0-b6cd-109ce06d2e5f)
+![Note-it Relation Diagram](https://github.com/harshptl14/note-it/assets/57007680/931f34a2-7029-4889-8686-2b3500799b63)
 
 # How to Run the Project
 
