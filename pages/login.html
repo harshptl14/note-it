@@ -30,14 +30,14 @@
       <div class="mainContent">
         <h2>Login</h2>
         <!-- form for login -->
-        <form>
+        <form id="login-form">
           <div class="form-control">
-            <label for="username">Username</label>
+            <label for="email">Email</label>
             <input
               class="textfield"
               type="text"
-              id="username"
-              placeholder="Enter username"
+              id="email"
+              placeholder="Enter Email"
               required
             />
           </div>
@@ -47,13 +47,15 @@
               class="textfield"
               type="password"
               id="password"
-              placeholder="Enter password"
+              placeholder="Enter Password"
               required
             />
           </div>
           <button class="btn">Login</button>
         </form>
+        <div id="user"></div>
       </div>
     </div>
+    <script type="module" src="../scripts/login.js"></script>
   </body>
 </html>
