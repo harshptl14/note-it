@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 // const cors = require("cors");
 const userRoutes = require("./routes/user-routes");
+const noteRoutes = require("./routes/note-routes");
 // setup for dotenv
 require("dotenv").config();
 // setup for mysql
@@ -21,6 +22,8 @@ app.use(function (req, res, next) {
 // app.use(express.urlencoded({ extended: true }));
 
 app.use("/users", userRoutes);
+
+app.use("/notes", noteRoutes);
 
 // app.use("/", (req, res) => {
 //   res.send("Hello World!");
