@@ -1,23 +1,38 @@
 import "./css/home.scss";
 
-const notes = [
-  {
-    id: 1,
-    title: "Note 1",
-    body: "This is the body of note 1",
-  },
-  {
-    id: 2,
-    title: "Note 2",
-    body: "This is the body of note 2",
-  },
-];
+let notes;
+
+// function to get all the notes from the database, api call
+// localhost:3000/notes
+
+// call this api when the page loads
+try {
+  const response = await fetch("http://localhost:3000/notes/allnotes", {
+    method: "POST",
+    body: JSON.stringify({
+      userid: localStorage.getItem("userid"),
+    }),
+    headers: {
+      Authorization: `${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (response.status === 200) {
+    // Successful login, extract and store user data
+    const res = await response.json();
+    notes = res;
+  }
+} catch (error) {
+  // Generic error handling
+  console.error(error);
+  alert("An error occurred. Please try again later.");
+}
 
 notes.forEach((note) => {
   document.querySelector("#todos").innerHTML += `
     <div class="card">
       <h2>${note.title}</h2>
-      <div>${note.body}</div>
     </div>
   `;
 });

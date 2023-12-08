@@ -1,63 +1,53 @@
-// get the username, password and email from the form
-// Display the username, password and email(user-object) on the page
+const registerForm = document.getElementById("register-form"); // Get the register form element
 
-// --------------- Future work: send this data to the server ---------------
-// send the data to the server
-// if the server returns a success message, redirect to the login page
-// if the server returns an error message, display it on the page
+const username = document.getElementById("username"); // Get the username input element
+const password = document.getElementById("password"); // Get the password input element
+const email = document.getElementById("email"); // Get the email input element
 
-// get the username, password and email from the form
-const registerForm = document.getElementById("register-form");
-const username = document.getElementById("username");
-const password = document.getElementById("password");
-const email = document.getElementById("email");
-
-// send the data to the server
 registerForm.addEventListener("submit", async (e) => {
+  // Prevent default form submission behavior
   e.preventDefault();
 
-  // get the username, password and email from the form
+  // Extract user input from form fields
   const usernameValue = username.value;
   const passwordValue = password.value;
   const emailValue = email.value;
 
-  // send the data to the server
-  await fetch("http://localhost:3000/users/register", {
-    method: "POST",
-    body: JSON.stringify({
-      username: usernameValue,
-      password: passwordValue,
-      email: String(emailValue),
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  }).then((res) => {
-    // check if the response is ok
-    // if yes, then store it in the local storgae and redirect to the login page
-    // if no, then display the error message on the page
-    if (res.status === 201) {
-      // put the token and userid in local storage
-      res.json().then((data) => {
-        console.log(data);
-        localStorage.setItem("userid", data.insertId);
-        localStorage.setItem("token", data.token);
-        window.location.href = "/";
-      });
+  try {
+    // Send POST request to register user with provided credentials
+    const response = await fetch("http://localhost:3000/users/register", {
+      method: "POST",
+      body: JSON.stringify({
+        username: usernameValue,
+        password: passwordValue,
+        email: emailValue,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    // Check server response status code
+    if (response.status === 201) {
+      // Successful registration
+      const { token, insertId } = await response.json(); // Extract token and user ID from response
+      localStorage.setItem("userid", insertId); // Store user ID in local storage
+      localStorage.setItem("token", token); // Store token in local storage
+
+      // store token in the cookie, so that it can be used in the next request and give a name to the cookie as token
+      document.cookie = `token=${token}`;
+      window.location.href = "/"; // Redirect user to the homepage
     } else {
-      alert(res.error);
+      // Handle error based on status code
+      if (response.status === 409) {
+        alert("Email already exists."); // Inform user about existing username or email
+      } else {
+        alert("An error occurred. Please try again later."); // Generic error message for other server issues
+      }
     }
-  });
-
-  // Display the username, password and email(user-object) on the page
-  // const user = {
-  //   username: usernameValue,
-  //   password: passwordValue,
-  //   email: emailValue,
-  // };
-
-  // const userJSON = JSON.stringify(user);
-
-  // const userElement = document.getElementById("user");
-  // userElement.innerHTML = userJSON;
+  } catch (error) {
+    // Catch any unexpected errors during the process
+    console.error(error); // Log error details to console
+    alert("An error occurred. Please try again later."); // Inform user about the error
+  }
 });
