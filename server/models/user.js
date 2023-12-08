@@ -1,7 +1,8 @@
 // user model using mysql
 // const bcrypt = require("bcrypt");
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const db = require("./db-connect");
+require("dotenv").config();
 //
 
 // check if user exists
@@ -34,7 +35,9 @@ const register = async (email, password, username) => {
 
     const result = await db.query(sql, params);
     console.log("Insert successful. Inserted ID:", result.insertId);
-    const token = require("crypto").randomBytes(64).toString("hex");
+    // const token = require("crypto").randomBytes(64).toString("hex");
+    const token = generateToken(result.insertId);
+    console.log("token", token);
     const finalResponse = {
       token: token,
       ...result,
@@ -62,9 +65,16 @@ const login = async (email, password) => {
       //   });
       //   return token;
       // }
-      if (isPasswordCorrect) {
-        return true;
+      if (!isPasswordCorrect) {
+        return false;
       }
+
+      const token = generateToken(user.userID);
+      return {
+        id: user.userID,
+        email,
+        token,
+      };
     }
     return false;
   } catch (err) {
@@ -72,98 +82,12 @@ const login = async (email, password) => {
   }
 };
 
-// functions
-// userExists
-// login
-// const { promisify } = require("util");
-// const query = promisify(db.query).bind(db);
-//
-// const User = function (user) {
-//   this.email = user.email;
-//   this.password = user.password;
-// };
-//
-// User.create = async (newUser, result) => {
-//   try {
-//     const hashedPassword = await bcrypt.hash(newUser.password, 10);
-//     const user = {
-//       email: newUser.email,
-//       password: hashedPassword,
-//     };
-//     const sql = "INSERT INTO users SET ?";
-//     const res = await query(sql, user);
-//     result(null, { id: res.insertId, ...user });
-//   } catch (err) {
-//     result(err, null);
-//   }
-// };
-//
-// User.findByEmail = async (email, result) => {
-//   try {
-//     const sql = "SELECT * FROM users WHERE email = ?";
-//     const res = await query(sql, email);
-//     if (res.length) {
-//       result(null, res[0]);
-//       return;
-//     }
+function generateToken(userId) {
+  const payload = { id: userId };
+  const token = jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+  return token;
+}
 
-//     result({ kind: "not_found" }, null);
-//   } catch (err) {
-//     result(err, null);
-//   }
-// };
-//
-// User.login = async (email, password, result) => {
-//   try {
-//     const sql = "SELECT * FROM users WHERE email = ?";
-//     const res = await query(sql, email);
-//     if (res.length) {
-//       const user = res[0];
-//       const isPasswordCorrect = await bcrypt.compare(password, user.password);
-//       if (isPasswordCorrect) {
-//         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-//           expiresIn: process.env.JWT_EXPIRES_IN,
-//         });
-//         result(null, token);
-//         return;
-//       }
-//     }
-//     result({ kind: "not_found" }, null);
-//   } catch (err) {
-//     result(err, null);
-//   }
-// };
-//
-// User.findById = async (id, result) => {
-//   try {
-//     const sql = "SELECT * FROM users WHERE id = ?";
-//     const res = await query(sql, id);
-//     if (res.length) {
-//       result(null, res[0]);
-//       return;
-//     }
-//     result({ kind: "not_found" }, null);
-//   } catch (err) {
-//     result(err, null);
-//   }
-// };
-//
-// module.exports = User;
-// user model using mongodb
-// const mongoose = require("mongoose");
-//
-// const UserSchema = mongoose.Schema({
-//   email: {
-//     type: String,
-//     required: true,
-//     unique: true,
-//     trim: true,
-//   },
-//   password: {
-//     type: String,
-//     required: true,
-//     minLength: 6,
-//   },
-// });
-//
 module.exports = { register, login, userExists };

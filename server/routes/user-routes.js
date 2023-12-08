@@ -9,13 +9,13 @@ const login = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    const isPasswordCorrect = await User.login(email, password);
-    if (!isPasswordCorrect) {
-      return res.status(400).json({ message: "Invalid credentials" });
+    const userExists = await User.login(email, password);
+    if (userExists === false) {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const token = require("crypto").randomBytes(64).toString("hex");
-    res.status(200).json({ token });
+    // const token = require("crypto").randomBytes(64).toString("hex");
+    res.status(200).json(userExists);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -26,7 +26,7 @@ const register = async (req, res) => {
   try {
     const user = await User.userExists(email);
     if (user) {
-      return res.status(400).json({ message: "User already exists" });
+      return res.status(409).json({ message: "User already exists" });
     }
     const newUser = await User.register(email, password, username);
     res.status(201).json(newUser);
