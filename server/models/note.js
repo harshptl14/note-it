@@ -1,11 +1,18 @@
 const db = require("./db-connect");
 
 // Create note
-const createNote = async (userID, categoryID, title, createDate, status) => {
+const createNote = async (
+  userID,
+  categoryID,
+  title,
+  createDate,
+  status,
+  body
+) => {
   try {
     const sql =
-      "INSERT INTO Note (userID, categoryID, title, createDate, status) VALUES (?, ?, ?, ?, ?)";
-    const params = [userID, categoryID, title, createDate, status];
+      "INSERT INTO Note (userID, categoryID, title, createDate, status, body) VALUES (?, ?, ?, ?, ?, ?)";
+    const params = [userID, categoryID, title, createDate, status, body];
     const result = await db.query(sql, params);
     console.log("Note created successfully. Note ID:", result.insertId);
     return result.insertId;

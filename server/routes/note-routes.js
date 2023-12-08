@@ -25,8 +25,8 @@ router.post("/allnotes", authenticate, async (req, res) => {
 
 // Create a note (requires authentication)
 router.post("/create", authenticate, async (req, res) => {
-  const { categoryID, title, createDate, status } = req.body;
-  const userId = req.user.userId; // Replace with actual user ID extraction
+  const { categoryID, title, createDate, status, body } = req.body;
+  const userId = req.body.userId; // Replace with actual user ID extraction
 
   try {
     const noteId = await createNote(
@@ -34,7 +34,8 @@ router.post("/create", authenticate, async (req, res) => {
       categoryID,
       title,
       createDate,
-      status
+      status,
+      body
     );
     res.status(201).json({ message: "Note created successfully", noteId });
   } catch (err) {
