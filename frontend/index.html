@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -59,6 +59,95 @@
       </div>
     </div>
     <script type="module" src="/index.js"></script>
-    <script defer src="./scripts/init.js"></script>
+    <script type="module" src="./scripts/init.js"></script>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.scss" />
+    <link rel="stylesheet" href="css/main.scss" />
+    <link rel="stylesheet" href="css/form.scss" />
+    <link rel="stylesheet" href="css/navbar.scss" />
+    <title>Home</title>
+  </head>
+  <body>
+    <div class="layout">
+      <div class="body">
+        <a class="logo" href="index.html">
+          <img
+            src="assets/icons/logo.png"
+            alt="logo"
+            height="30px"
+            width="30px"
+          />
+          <div>Note-todo</div>
+        </a>
+        <br />
+        <div class="links">
+          <a href="index.html">Home</a>
+          <a id="login-button" href="../pages/login.html">Login</a>
+          <a id="signup-button" href="../pages/register.html">Register</a>
+        </div>
+      </div>
+      <div class="mainContent">
+        <div class="notesLayout">
+          <div class="noteContainer">
+            <h3>Notes</h3>
+            <div id="todos" class="todocard"></div>
+          </div>
+          <div>
+            <h3>Add Note</h3>
+            <div id="addnotes">
+              <input
+                type="text"
+                id="title"
+                placeholder="Add a title"
+                class="textfield"
+              />
+              <textarea
+                class="textfield"
+                id="body"
+                name="note"
+                rows="4"
+                cols="10"
+              ></textarea>
+              <button id="add">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add a modal for editing a note -->
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeEditModal()">&times;</span>
+        <h2>Edit Note</h2>
+        <div>
+          <input
+            type="text"
+            id="editTitle"
+            class="textfield"
+            placeholder="Edit title"
+          />
+          <textarea
+            id="editBody"
+            class="textfield"
+            placeholder="Edit body"
+            rows="4"
+            cols="10"
+          ></textarea>
+        </div>
+        <button id="saveEdit">Save</button>
+      </div>
+    </div>
+
+    <script type="module" src="/index.js"></script>
+    <script type="module" src="./scripts/init.js"></script>
   </body>
 </html>

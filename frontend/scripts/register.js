@@ -2,6 +2,7 @@ const registerForm = document.getElementById("register-form"); // Get the regist
 
 const username = document.getElementById("username"); // Get the username input element
 const password = document.getElementById("password"); // Get the password input element
+const confirmPassword = document.getElementById("password2"); // Get the confirm password input element
 const email = document.getElementById("email"); // Get the email input element
 
 registerForm.addEventListener("submit", async (e) => {
@@ -11,7 +12,14 @@ registerForm.addEventListener("submit", async (e) => {
   // Extract user input from form fields
   const usernameValue = username.value;
   const passwordValue = password.value;
+  const confirmPasswordValue = confirmPassword.value;
   const emailValue = email.value;
+
+  // Check if passwords match
+  if (passwordValue !== confirmPasswordValue) {
+    alert("Passwords do not match. Please try again.");
+    return; // Stop form submission
+  }
 
   try {
     // Send POST request to register user with provided credentials
@@ -37,7 +45,7 @@ registerForm.addEventListener("submit", async (e) => {
       localStorage.setItem("userid", insertId); // Store user ID in local storage
       localStorage.setItem("token", token); // Store token in local storage
 
-      // store token in the cookie, so that it can be used in the next request and give a name to the cookie as token
+      // Store token in the cookie, so that it can be used in the next request and give a name to the cookie as token
       document.cookie = `token=${token}`;
       window.location.href = "/"; // Redirect user to the homepage
     } else {

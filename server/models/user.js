@@ -50,6 +50,24 @@ const register = async (email, password, username) => {
   }
 };
 
+// get the user by userID
+const getUserById = async (userId) => {
+  try {
+    const sql = "SELECT * FROM User WHERE userID = ?";
+    const res = await db.query(sql, [userId]);
+    if (res.length) {
+      return {
+        ...res[0],
+        userPassword: null,
+      };
+    }
+
+    return null;
+  } catch (err) {
+    throw err;
+  }
+};
+
 const login = async (email, password) => {
   try {
     const sql = "SELECT * FROM User WHERE userEmail = ?";
@@ -90,4 +108,4 @@ function generateToken(userId) {
   return token;
 }
 
-module.exports = { register, login, userExists };
+module.exports = { register, login, userExists, getUserById };

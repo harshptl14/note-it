@@ -12,6 +12,13 @@ const currentPage = window.location.pathname;
 // get the user id from the local storage
 
 if (token) {
+  // token found and still in login page then redirect to home page
+  if (
+    currentPage === "/pages/login.html" ||
+    currentPage === "/pages/register.html"
+  ) {
+    window.location.href = "/index.html";
+  }
   const loginButton = document.getElementById("login-button");
   const signupButton = document.getElementById("signup-button");
   loginButton.remove();
@@ -25,7 +32,7 @@ if (token) {
 
   // add profile link
   const profileLink = document.createElement("a");
-  profileLink.href = "/profile.html";
+  profileLink.href = "/pages/profile.html";
   profileLink.innerText = "Profile";
   linksDiv.appendChild(profileLink);
 

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style.scss" />
+    <link rel="stylesheet" href="../css/navbar.scss" />
+    <title>User Profile</title>
+  </head>
+  <body>
+    <div class="layout">
+      <div class="body">
+        <a class="logo" href="../index.html">
+          <img
+            src="../assets/icons/logo.png"
+            alt="logo"
+            height="30px"
+            width="30px"
+          />
+          <div>Note-todo</div>
+        </a>
+        <br />
+        <div class="links">
+          <a href="../index.html">Home</a>
+          <a id="login-button" href="../pages/login.html">Login</a>
+          <a id="signup-button" href="../pages/register.html">Register</a>
+          <!-- <a href="../pages/profile.html">Profile</a> -->
+          <!-- Add more links as needed -->
+        </div>
+      </div>
+      <div class="mainContent">
+        <h2>User Profile</h2>
+        <div id="user-details">
+          <!-- User details will be displayed here -->
+        </div>
+      </div>
+    </div>
+    <script type="module" src="../scripts/profile.js"></script>
+    <script type="module" src="../scripts/init.js"></script>
+  </body>
+</html>
