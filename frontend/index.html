@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="css/home.scss" />
     <link rel="stylesheet" href="css/navbar.scss" />
     <title>Home</title>
+    <script type="module" src="/index.js"></script>
+    <script type="module" src="./scripts/init.js"></script>
   </head>
   <body>
     <div class="layout">
@@ -61,7 +63,7 @@
     <!-- Add a modal for editing a note -->
     <div id="editModal" class="modal">
       <div class="modal-content">
-        <span class="close" onclick="closeEditModal()">&times;</span>
+        <span id="closemodal" class="close">&times;</span>
         <h2>Edit Note</h2>
         <div>
           <input
@@ -81,8 +83,5 @@
         <button id="saveEdit">Save</button>
       </div>
     </div>
-
-    <script type="module" src="/index.js"></script>
-    <script type="module" src="./scripts/init.js"></script>
   </body>
 </html>

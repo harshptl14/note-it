@@ -320,5 +320,11 @@ todosContainer.addEventListener("click", (event) => {
   }
 });
 
+const closeModal = document.getElementById("closemodal");
+
+closeModal.addEventListener("click", () => {
+  closeEditModal();
+});
+
 // Initial load of notes
 getNotes();
