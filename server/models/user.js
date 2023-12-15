@@ -9,7 +9,7 @@ require("dotenv").config();
 const userExists = async (email) => {
   console.log("userExists", email);
   try {
-    const sql = "SELECT * FROM user WHERE userEmail = ?";
+    const sql = "SELECT * FROM User WHERE userEmail = ?";
     const res = await db.query(sql, [email]);
     console.log("userExists", res);
     if (res.length) {
@@ -30,7 +30,7 @@ const register = async (email, password, username) => {
   // save the user in the database
   try {
     const sql =
-      "INSERT INTO user (userEmail, userPassword, userName) VALUES (?, ?, ?)";
+      "INSERT INTO User (userEmail, userPassword, userName) VALUES (?, ?, ?)";
     const params = [email, password, username];
 
     const result = await db.query(sql, params);
@@ -52,7 +52,7 @@ const register = async (email, password, username) => {
 
 const login = async (email, password) => {
   try {
-    const sql = "SELECT * FROM user WHERE userEmail = ?";
+    const sql = "SELECT * FROM User WHERE userEmail = ?";
     const res = await db.query(sql, [email]);
     if (res.length) {
       const user = res[0];

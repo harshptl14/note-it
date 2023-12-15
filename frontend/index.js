@@ -1,9 +1,33 @@
 import "./css/home.scss";
 
+const todosContainer = document.querySelector("#todos");
+const titleInput = document.querySelector("#title");
+const bodyInput = document.querySelector("#body");
+
 let notes;
 
-// function to get all the notes from the database, api call
-// localhost:3000/notes
+const createNoteElement = (title, body) => {
+  const card = document.createElement("div");
+  card.classList.add("card");
+  card.innerHTML = `
+    <h2>${title}</h2>
+    <div>${body}</div>
+  `;
+  return card;
+};
+
+const renderNotes = () => {
+  todosContainer.innerHTML = ""; // Clear the container first
+
+  if (notes && notes.length > 0) {
+    notes.forEach((note) => {
+      const noteElement = createNoteElement(note.title, note.body);
+      todosContainer.appendChild(noteElement);
+    });
+  } else {
+    todosContainer.innerHTML = "<p>No notes yet</p>";
+  }
+};
 
 const getNotes = async () => {
   try {
@@ -13,70 +37,26 @@ const getNotes = async () => {
         userid: localStorage.getItem("userid"),
       }),
       headers: {
-        Authorization: `${localStorage.getItem("token")}`,
+        Authorization: localStorage.getItem("token"),
         "Content-Type": "application/json",
       },
     });
 
     if (response.status === 200) {
-      // Successful login, extract and store user data
       const res = await response.json();
       notes = res;
-
-      if (notes[0]) {
-        notes.forEach((note) => {
-          document.querySelector("#todos").innerHTML += `
-        <div class="card">
-          <h2>${note.title}</h2>
-          <div>${note.body}</div>
-        </div>
-        `;
-        });
-      } else {
-        document.querySelector("#todos").innerHTML += `
-    <p>No notes yet</p>`;
-      }
+      renderNotes();
     }
   } catch (error) {
-    // Generic error handling
     console.error(error);
     alert("An error occurred. Please try again later.");
   }
 };
-// call this api when the page loads
-// try {
-//   const response = await fetch("http://localhost:3000/notes/allnotes", {
-//     method: "POST",
-//     body: JSON.stringify({
-//       userid: localStorage.getItem("userid"),
-//     }),
-//     headers: {
-//       Authorization: `${localStorage.getItem("token")}`,
-//       "Content-Type": "application/json",
-//     },
-//   });
 
-//   if (response.status === 200) {
-//     // Successful login, extract and store user data
-//     const res = await response.json();
-//     notes = res;
-//   }
-// } catch (error) {
-//   // Generic error handling
-//   console.error(error);
-//   alert("An error occurred. Please try again later.");
-// }
-
-getNotes();
-
-document.querySelector("#add").addEventListener("click", async () => {
-  const title = document.querySelector("#title").value;
-  const body = document.querySelector("#body").value;
-
-  console.log(title, body);
-  // const id = notes.length + 1;
+const addNote = async () => {
+  const title = titleInput.value;
+  const body = bodyInput.value;
   const date = new Date();
-  // notes.push({ id, title, body });
 
   try {
     const response = await fetch("http://localhost:3000/notes/create", {
@@ -84,34 +64,34 @@ document.querySelector("#add").addEventListener("click", async () => {
       body: JSON.stringify({
         userId: localStorage.getItem("userid"),
         categoryID: 1,
-        title: title,
-        body: body,
+        title,
+        body,
         createDate: date.toISOString().slice(0, 19).replace("T", " "),
         status: "Pending",
       }),
       headers: {
-        Authorization: `${localStorage.getItem("token")}`,
+        Authorization: localStorage.getItem("token"),
         "Content-Type": "application/json",
       },
     });
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       const res = await response.json();
-      document.querySelector("#todos").innerHTML += `
-      <div class="card">
-        <h2>${title}</h2>
-        <div>${body}</div>
-      </div>
-  `;
-      // getNotes();
-      // notes = res;
+      notes.push({ title, body });
+      const noteElement = createNoteElement(title, body);
+      todosContainer.appendChild(noteElement);
     }
 
-    document.querySelector("#title").value = "";
-    document.querySelector("#body").value = "";
+    titleInput.value = "";
+    bodyInput.value = "";
   } catch (error) {
-    // Generic error handling
     console.error(error);
     alert("An error occurred. Please try again later.");
   }
-});
+};
+
+// Event listener for Add button
+document.querySelector("#add").addEventListener("click", addNote);
+
+// Initial load of notes
+getNotes();
