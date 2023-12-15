@@ -29,7 +29,7 @@ router.post("/create", authenticate, async (req, res) => {
   const userId = req.body.userId; // Replace with actual user ID extraction
 
   try {
-    const noteId = await createNote(
+    const note = await createNote(
       userId,
       categoryID,
       title,
@@ -37,7 +37,7 @@ router.post("/create", authenticate, async (req, res) => {
       status,
       body
     );
-    res.status(201).json({ message: "Note created successfully", noteId });
+    res.status(201).json({ message: "Note created successfully", note });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -62,11 +62,19 @@ router.get("/:noteId", authenticate, async (req, res) => {
 // Update a note (requires authentication)
 router.put("/:noteId", authenticate, async (req, res) => {
   const noteId = req.params.noteId;
-  const { categoryID, title, createDate, status } = req.body;
+  const { categoryID, userID, title, createDate, status, body } = req.body;
 
   try {
-    await updateNote(noteId, categoryID, title, createDate, status);
-    res.status(200).json({ message: "Note updated successfully" });
+    const note = await updateNote(
+      noteId,
+      userID,
+      categoryID,
+      title,
+      createDate,
+      status,
+      body
+    );
+    res.status(200).json({ message: "Note updated successfully", note });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -74,6 +82,7 @@ router.put("/:noteId", authenticate, async (req, res) => {
 
 // Delete a note (requires authentication)
 router.delete("/:noteId", authenticate, async (req, res) => {
+  console.log(req.params.noteId);
   const noteId = req.params.noteId;
 
   try {

@@ -14,8 +14,10 @@ const createNote = async (
       "INSERT INTO Note (userID, categoryID, title, createDate, status, body) VALUES (?, ?, ?, ?, ?, ?)";
     const params = [userID, categoryID, title, createDate, status, body];
     const result = await db.query(sql, params);
+
+    const note = getNoteById(result.insertId);
     console.log("Note created successfully. Note ID:", result.insertId);
-    return result.insertId;
+    return note;
   } catch (err) {
     console.error("Error creating note:", err);
     throw err;
@@ -24,19 +26,32 @@ const createNote = async (
 
 // Update note
 const updateNote = async (
-  noteID,
+  noteId,
   userID,
   categoryID,
   title,
   createDate,
-  status
+  status,
+  body
 ) => {
   try {
     const sql =
-      "UPDATE Note SET userID = ?, categoryID = ?, title = ?, createDate = ?, status = ? WHERE noteID = ?";
-    const params = [userID, categoryID, title, createDate, status, noteID];
+      "UPDATE Note SET userID = ?, categoryID = ?, title = ?, createDate = ?, status = ?, body = ? WHERE noteID = ?";
+    const params = [
+      userID,
+      categoryID,
+      title,
+      createDate,
+      status,
+      body,
+      noteId,
+    ];
     await db.query(sql, params);
-    console.log("Note updated successfully:", noteID);
+
+    const note = getNoteById(noteId);
+    console.log("Note updated successfully:", noteId);
+
+    return note;
   } catch (err) {
     console.error("Error updating note:", err);
     throw err;
