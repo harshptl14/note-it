@@ -31,16 +31,19 @@ const renderNotes = () => {
 
 const getNotes = async () => {
   try {
-    const response = await fetch("http://localhost:3000/notes/allnotes", {
-      method: "POST",
-      body: JSON.stringify({
-        userid: localStorage.getItem("userid"),
-      }),
-      headers: {
-        Authorization: localStorage.getItem("token"),
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      "https://note-it-server-5vhi.onrender.com/notes/allnotes",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          userid: localStorage.getItem("userid"),
+        }),
+        headers: {
+          Authorization: localStorage.getItem("token"),
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (response.status === 200) {
       const res = await response.json();
@@ -59,21 +62,24 @@ const addNote = async () => {
   const date = new Date();
 
   try {
-    const response = await fetch("http://localhost:3000/notes/create", {
-      method: "POST",
-      body: JSON.stringify({
-        userId: localStorage.getItem("userid"),
-        categoryID: 1,
-        title,
-        body,
-        createDate: date.toISOString().slice(0, 19).replace("T", " "),
-        status: "Pending",
-      }),
-      headers: {
-        Authorization: localStorage.getItem("token"),
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      "https://note-it-server-5vhi.onrender.com/notes/create",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          userId: localStorage.getItem("userid"),
+          categoryID: 1,
+          title,
+          body,
+          createDate: date.toISOString().slice(0, 19).replace("T", " "),
+          status: "Pending",
+        }),
+        headers: {
+          Authorization: localStorage.getItem("token"),
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (response.status === 201) {
       const res = await response.json();

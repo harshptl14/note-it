@@ -15,17 +15,20 @@ registerForm.addEventListener("submit", async (e) => {
 
   try {
     // Send POST request to register user with provided credentials
-    const response = await fetch("http://localhost:3000/users/register", {
-      method: "POST",
-      body: JSON.stringify({
-        username: usernameValue,
-        password: passwordValue,
-        email: emailValue,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      "https://note-it-server-5vhi.onrender.com/users/register",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          username: usernameValue,
+          password: passwordValue,
+          email: emailValue,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     // Check server response status code
     if (response.status === 201) {

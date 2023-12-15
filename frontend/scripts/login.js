@@ -11,13 +11,16 @@ loginForm.addEventListener("submit", async (e) => {
 
   // Send POST request to authenticate user
   try {
-    const response = await fetch("http://localhost:3000/users/login", {
-      method: "POST",
-      body: JSON.stringify({ email: emailValue, password: passwordValue }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      "https://note-it-server-5vhi.onrender.com/users/login",
+      {
+        method: "POST",
+        body: JSON.stringify({ email: emailValue, password: passwordValue }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (response.status === 200) {
       // Successful login, extract and store user data
